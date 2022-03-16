@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Guidotti-dll/clean-architecture-study/issues"
   },
-  "homepage": "https://github.com/Guidotti-dll/clean-architecture-study#readme"
+  "homepage": "https://github.com/Guidotti-dll/clean-architecture-study#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^4.1.1"
+  }
 }
