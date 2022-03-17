@@ -4,13 +4,12 @@ import { HttpRequest, httpResponse } from '../protocols/http'
 
 export class SignUoController {
   handle (httpRequest: HttpRequest): httpResponse {
-    if (!httpRequest.body.name) {
-      return badRequest(new MissingParamError('name'))
+    const requiredFields = ['name', 'email']
+    for (const field of requiredFields) {
+      if (!httpRequest.body[field]) {
+        return badRequest(new MissingParamError(field))
+      }
     }
-    if (!httpRequest.body.email) {
-      return badRequest(new MissingParamError('email'))
-    }
-
     return {
       statusCode: 500,
       body: new Error('internal error')
