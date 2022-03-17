@@ -1,24 +1,19 @@
 import { MissingParamError } from '../errors/missing-param-error'
-import { HttpRequest, httpResponse } from '../prottocols/http'
+import { badRequest } from '../helpers/http-helper'
+import { HttpRequest, httpResponse } from '../protocols/http'
 
 export class SignUoController {
   handle (httpRequest: HttpRequest): httpResponse {
     if (!httpRequest.body.name) {
-      return {
-        body: new MissingParamError('name'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('name'))
     }
     if (!httpRequest.body.email) {
-      return {
-        body: new MissingParamError('email'),
-        statusCode: 400
-      }
+      return badRequest(new MissingParamError('email'))
     }
 
     return {
       statusCode: 500,
-      body: {}
+      body: new Error('internal error')
     }
   }
 }
