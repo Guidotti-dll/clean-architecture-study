@@ -3,7 +3,7 @@ import { badRequest } from '../helpers/http-helper'
 import { Controller } from '../protocols/controller'
 import { HttpRequest, httpResponse } from '../protocols/http'
 
-export class SignUoController implements Controller {
+export class SignUpController implements Controller {
   handle (httpRequest: HttpRequest): httpResponse {
     const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
     for (const field of requiredFields) {
