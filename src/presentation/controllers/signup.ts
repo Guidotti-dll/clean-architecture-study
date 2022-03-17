@@ -1,5 +1,7 @@
+import { HttpRequest, httpResponse } from '../prottocols/http'
+
 export class SignUoController {
-  handle (httpRequest: any): any {
+  handle (httpRequest: HttpRequest): httpResponse {
     if (!httpRequest.body.name) {
       return {
         body: new Error('Missing param: name'),
@@ -11,6 +13,11 @@ export class SignUoController {
         body: new Error('Missing param: email'),
         statusCode: 400
       }
+    }
+
+    return {
+      statusCode: 500,
+      body: {}
     }
   }
 }
