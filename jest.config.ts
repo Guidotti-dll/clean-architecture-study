@@ -1,5 +1,6 @@
 module.exports = {
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  collectCoverageFrom: ['<rootDir>/src/**/*.ts',
+    '!<rootDir>/src/main/*.ts'],
   coverageDirectory: 'coverage',
   coverageProvider: 'babel',
   roots: [
