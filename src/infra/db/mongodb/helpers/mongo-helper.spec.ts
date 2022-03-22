@@ -4,7 +4,6 @@ import { MongoHelper as sut } from './mongo-helper'
 describe('Mongo Helper', () => {
   beforeAll(async () => {
     await sut.connect(env.mongoUrl)
-    console.log(sut.client)
   })
 
   afterAll(async () => {
