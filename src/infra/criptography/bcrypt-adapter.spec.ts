@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import bcrypt from 'bcrypt'
 import { BcryptAdapter } from './bcrypt-adapter'
 
@@ -51,9 +52,12 @@ describe('Bcrypt Adapter', () => {
     expect(compareSpy).toHaveBeenCalledWith('any_value', 'any_hash')
   })
 
-  test('Should return true when compare succeeds', async () => {
+  test('Should return false when compare fails', async () => {
     const sut = makeSut()
+    jest.spyOn(bcrypt, 'compare').mockImplementationOnce(async () => {
+      return await new Promise(resolve => resolve(false as unknown as void))
+    })
     const isValid = await sut.compare('any_value', 'any_hash')
-    expect(isValid).toBe(true)
+    expect(isValid).toBe(false)
   })
 })
