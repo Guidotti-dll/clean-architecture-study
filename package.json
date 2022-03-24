@@ -13,8 +13,9 @@
     "test:unit:verbose": "jest --passWithNoTests --noStackTrace --runInBand --no-cache --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage",
-    "prepare": "husky install"
+    "test:ci": "npm test -- --coverage"
+
+    
   },
   "repository": {
     "type": "git",
