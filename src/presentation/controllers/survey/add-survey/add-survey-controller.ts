@@ -1,9 +1,11 @@
 import { badRequest } from '../../../helpers/http/http-helper'
-import { Controller, HttpRequest, HttpResponse, Validation } from './add-survey-controller-protocols'
+import { AddSurvey, Controller, HttpRequest, HttpResponse, Validation } from './add-survey-controller-protocols'
 
 export class AddSurveyController implements Controller {
   constructor (
-    private readonly validation: Validation
+    private readonly validation: Validation,
+    private readonly addSurvey: AddSurvey
+
   ) {
     this.validation = validation
   }
@@ -13,6 +15,13 @@ export class AddSurveyController implements Controller {
     if (error) {
       return badRequest(error)
     }
-    return await new Promise(resolve => resolve(null as unknown as HttpResponse))
+
+    const { question, answers } = httpRequest.body
+
+    await this.addSurvey.add({
+      question,
+      answers
+    })
+    return null as unknown as HttpResponse
   }
 }
