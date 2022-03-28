@@ -48,7 +48,6 @@ describe('Survey Routes', () => {
         name: 'lucas',
         email: 'lucas@mail.com',
         password: '123',
-        accessToken: 'lucas-token',
         role: 'admin'
       })
 
