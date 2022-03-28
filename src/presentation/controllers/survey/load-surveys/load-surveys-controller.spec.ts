@@ -1,10 +1,10 @@
 import { SurveyModel, LoadSurveys } from './load-survey-controller-protocols'
-import { ok, serverError } from '../../../helpers/http/http-helper'
+import { noContent, ok, serverError } from '../../../helpers/http/http-helper'
 import { LoadSurveysController } from './load-surveys-controller'
 import MockDate from 'mockdate'
 
-const makeFakeSurveys = (): SurveyModel[] => {
-  return [
+const makeFakeSurveys = (): SurveyModel[] => (
+  [
     {
       id: 'any_id',
       question: 'any_question',
@@ -28,7 +28,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
       date: new Date()
     }
   ]
-}
+)
 
 const makeLoadSurveysStub = (): LoadSurveys => {
   class LoadSurveysStub implements LoadSurveys {
@@ -70,11 +70,16 @@ describe('LoadSurveys Controller', () => {
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(ok(makeFakeSurveys()))
   })
+  test('Should return 204 if LoadSurveys returns empty', async () => {
+    const { sut, loadSurveysStub } = makeSut()
+    jest.spyOn(loadSurveysStub, 'load').mockReturnValueOnce(new Promise((resolve) => resolve([])))
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(noContent())
+  })
 
   test('Should return 500 if LoadSurvey  throws', async () => {
     const { sut, loadSurveysStub } = makeSut()
     jest.spyOn(loadSurveysStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(serverError(new Error()))
   })
