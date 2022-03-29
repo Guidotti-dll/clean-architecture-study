@@ -4,9 +4,32 @@ import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import app from '../config/app'
 import { sign } from 'jsonwebtoken'
 import env from '../config/env'
+import { AddSurveyModel } from '../../domain/usecases/add-survey'
 
 let surveyCollection: Collection
 let accountCollection: Collection
+
+const makeSurveyData = (): AddSurveyModel[] => ([{
+  question: 'any_question',
+  answers: [
+    {
+      image: 'any_image',
+      answer: 'any_answer'
+    }
+  ],
+  date: new Date()
+},
+{
+  question: 'other_question',
+  answers: [
+    {
+      image: 'other_image',
+      answer: 'other_answer'
+    }
+  ],
+  date: new Date()
+}
+])
 
 describe('Survey Routes', () => {
   beforeAll(async () => {
@@ -43,7 +66,7 @@ describe('Survey Routes', () => {
         .expect(403)
     })
 
-    test('Should return 403 on without accessToken', async () => {
+    test('Should return 204 on add surveys with accessToken', async () => {
       const res = await accountCollection.insertOne({
         name: 'lucas',
         email: 'lucas@mail.com',
@@ -79,6 +102,23 @@ describe('Survey Routes', () => {
       await request(app)
         .get('/api/surveys')
         .expect(403)
+    })
+
+    test('Should return 200 on load surveys accessToken', async () => {
+      const res = await accountCollection.insertOne({
+        name: 'lucas',
+        email: 'lucas@mail.com',
+        password: '123'
+      })
+      const id = res.insertedId.toString()
+      const accessToken = sign({ id }, env.jwtSecret)
+      await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } })
+      await surveyCollection.insertMany(makeSurveyData())
+
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+        .expect(200)
     })
   })
 })
