@@ -9,6 +9,7 @@
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "docker:up": "npm run build && docker-compose up -d",
     "docker:down": "docker-compose down",
+    "docker:restart": "docker-compose down && npm run docker:up",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
