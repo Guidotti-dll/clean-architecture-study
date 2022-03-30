@@ -16,6 +16,6 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
       upsert: true
     })
 
-    return { ...data, id: surveyResult.value?._id.toString() ?? surveyResult.lastErrorObject?.upserted.toString() }
+    return MongoHelper.map({ ...data, _id: surveyResult.value?._id ?? surveyResult.lastErrorObject?.upserted })
   }
 }
