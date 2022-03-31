@@ -1,6 +1,14 @@
-import { loginPah } from './paths'
-import { badRequest, serverError, unauthorized, notFound } from './components'
-import { accountSchema, errorSchema, loginParamsSchema } from './schemas'
+import { loginPah, surveyPah } from './paths'
+import { badRequest, serverError, unauthorized, notFound, forbidden } from './components'
+import {
+  accountSchema,
+  errorSchema,
+  loginParamsSchema,
+  surveyAnswerSchema,
+  surveySchema,
+  surveysSchema,
+  apiKeyAuthSchema
+} from './schemas'
 
 export default {
   openapi: '3.0.0',
@@ -9,7 +17,7 @@ export default {
     description: 'API curso para estudo de arquitetura de software',
     version: '1.0.0'
   },
-  licence: {
+  license: {
     name: 'ISC',
     url: 'https://opensource.org/licenses/ISC'
   },
@@ -18,19 +26,29 @@ export default {
   }],
   tags: [{
     name: 'Login'
+  }, {
+    name: 'Enquete'
   }],
   paths: {
-    '/login': loginPah
+    '/login': loginPah,
+    '/surveys': surveyPah
   },
   schemas: {
     account: accountSchema,
     loginParams: loginParamsSchema,
-    error: errorSchema
+    error: errorSchema,
+    survey: surveySchema,
+    surveys: surveysSchema,
+    surveyAnswer: surveyAnswerSchema
   },
   components: {
+    securitySchemes: {
+      apiKeyAuth: apiKeyAuthSchema
+    },
     badRequest,
     serverError,
     unauthorized,
-    notFound
+    notFound,
+    forbidden
   }
 }
