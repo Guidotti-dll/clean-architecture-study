@@ -1,4 +1,4 @@
-import { loginPah, surveyPah } from './paths'
+import { loginPath, surveyPath, signUpPath } from './paths'
 import { badRequest, serverError, unauthorized, notFound, forbidden } from './components'
 import {
   accountSchema,
@@ -7,6 +7,7 @@ import {
   surveyAnswerSchema,
   surveySchema,
   surveysSchema,
+  signUpParamsSchema,
   apiKeyAuthSchema
 } from './schemas'
 
@@ -30,12 +31,14 @@ export default {
     name: 'Enquete'
   }],
   paths: {
-    '/login': loginPah,
-    '/surveys': surveyPah
+    '/login': loginPath,
+    '/signup': signUpPath,
+    '/surveys': surveyPath
   },
   schemas: {
     account: accountSchema,
     loginParams: loginParamsSchema,
+    signUpParams: signUpParamsSchema,
     error: errorSchema,
     survey: surveySchema,
     surveys: surveysSchema,

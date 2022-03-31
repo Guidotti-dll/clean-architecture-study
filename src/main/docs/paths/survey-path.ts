@@ -1,4 +1,4 @@
-export const surveyPah = {
+export const surveyPath = {
   get: {
     security: [{
       apiKeyAuth: []
